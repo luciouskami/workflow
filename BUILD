@@ -163,6 +163,7 @@ cc_library(
 	],
 	visibility = ["//visibility:public"],
 )
+
 cc_library(
 	name = 'upstream',
 	hdrs = [
@@ -183,32 +184,6 @@ cc_library(
 		':common',
 	],
 	visibility = ["//visibility:public"],
-)
-
-cc_library(
-	name = 'kafka_client',
-	hdrs = [
-		'src/client/WFKafkaClient.h',
-		'src/factory/KafkaTaskImpl.inl',
-		'src/protocol/KafkaDataTypes.h',
-		'src/protocol/KafkaMessage.h',
-		'src/protocol/KafkaResult.h',
-		'src/protocol/kafka_parser.h',
-	],
-	includes = [
-		'src/client',
-		'src/factory',
-		'src/protocol',
-	],
-	srcs = [
-		'src/client/WFKafkaClient.cc',
-		'src/protocol/KafkaDataTypes.cc',
-		'src/protocol/KafkaResult.cc',
-		'src/protocol/kafka_parser.c',
-	],
-	deps = [
-		':common',
-	],
 )
 
 cc_library(
@@ -236,16 +211,35 @@ cc_library(
 
 cc_library(
 	name = 'kafka',
+	hdrs = [
+		'src/client/WFKafkaClient.h',
+		'src/factory/KafkaTaskImpl.inl',
+		'src/protocol/KafkaDataTypes.h',
+		'src/protocol/KafkaMessage.h',
+		'src/protocol/KafkaResult.h',
+		'src/protocol/kafka_parser.h',
+	],
+	includes = [
+		'src/client',
+		'src/factory',
+		'src/protocol',
+	],
+	srcs = [
+		'src/client/WFKafkaClient.cc',
+		'src/protocol/KafkaDataTypes.cc',
+		'src/protocol/KafkaResult.cc',
+		'src/protocol/kafka_parser.c',
+	],
 	deps = [
-		':kafka_client',
+		':common',
 		':kafka_message',
 	],
 	visibility = ["//visibility:public"],
 	linkopts = [
-	    '-lsnappy',
-	    '-llz4',
-	    '-lz',
-	    '-lzstd',
+		'-lsnappy',
+		'-llz4',
+		'-lz',
+		'-lzstd',
 	],
 )
 
