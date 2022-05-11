@@ -719,7 +719,7 @@ protected:
 	virtual ~WFGoTask() { }
 };
 
-class WFModuleTask : protected SeriesWork, public ParallelTask
+class WFModuleTask : public ParallelTask, protected SeriesWork
 {
 public:
 	void start()
@@ -762,8 +762,8 @@ protected:
 public:
 	WFModuleTask(SubTask *first,
 				 std::function<void (const WFModuleTask *)>&& cb) :
-		SeriesWork(first, nullptr),
 		ParallelTask(&this->first, 1),
+		SeriesWork(first, nullptr),
 		callback(std::move(cb))
 	{
 		this->first = first;
